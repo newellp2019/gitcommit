@@ -10,7 +10,7 @@ setuptools.setup(
     install_requires=[
         'psutil',
         'notebook',
-        'gitpython'
+        'pygithub'
     ],
     package_data={'githubcommit': ['static/*']},
 )
