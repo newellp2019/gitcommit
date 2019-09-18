@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="jupytergitcommit",
-    version='0.1',
+    version='0.2',
     url="https://github.com/newellp2019/gitcommit",
     author="Peter Newell",
     description="Jupyter extension to enable user push notebooks to a git repo",

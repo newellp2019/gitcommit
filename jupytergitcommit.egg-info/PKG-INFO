@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: jupytergitcommit
-Version: 0.1
+Version: 0.2
 Summary: Jupyter extension to enable user push notebooks to a git repo
 Home-page: https://github.com/newellp2019/gitcommit
 Author: Peter Newell
