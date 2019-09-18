@@ -1,7 +1,7 @@
 import setuptools
 
 setuptools.setup(
-    name="gitcommit",
+    name="jupytergitcommit",
     version='0.1',
     url="https://github.com/newellp2019/gitcommit",
     author="Peter Newell",
@@ -12,5 +12,5 @@ setuptools.setup(
         'notebook',
         'pygithub'
     ],
-    package_data={'githubcommit': ['static/*']},
+    package_data={'jupytergithubcommit': ['static/*']},
 )
