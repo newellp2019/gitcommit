@@ -33,9 +33,9 @@ class GitCommitHandler(IPythonHandler):
         data = json.loads(self.request.body.decode('utf-8'))
         filename = urllib.parse.unquote(data['filename'])
         msg = data['msg']
-        self.process_commit(g, repo, filename, msg, branch)
+        self.process_commit(g, repo, filename, msg, branch, data)
 
-    def process_commit(self, g, repo, new_file, msg, branch):
+    def process_commit(self, g, repo, new_file, msg, branch, data):
         try:
             contents = repo.get_contents("")
             while contents:
@@ -49,16 +49,16 @@ class GitCommitHandler(IPythonHandler):
                         self.create_file(g, msg, new_file, branch)
         except GithubException as ge:
             print(ge)
-            self.create_file(repo, msg, new_file, branch)
+            self.create_file(repo, msg, new_file, branch, data)
 
     @staticmethod
     def update_file(repo, msg, new_file, branch):
         repo.update_file(new_file, msg, msg, branch=branch)
 
     @staticmethod
-    def create_file(repo, msg, new_file, branch):
+    def create_file(repo, msg, new_file, branch, data):
         print(msg, new_file, branch)
-        repo.create_file(message=msg, content=new_file, branch=branch)
+        repo.create_file(message=msg, content=data, path=new_file, branch=branch)
 
 
 def setup_handlers(nbapp):
