@@ -53,11 +53,11 @@ class GitCommitHandler(IPythonHandler):
 
     @staticmethod
     def update_file(repo, msg, new_file, branch):
-        repo.update_file(new_file, msg, branch=branch)
+        repo.update_file(new_file, msg, msg, branch=branch)
 
     @staticmethod
     def create_file(repo, msg, new_file, branch):
-        repo.create_file(new_file, msg, branch=branch)
+        repo.create_file(new_file, msg, msg, branch=branch)
 
 
 def setup_handlers(nbapp):
