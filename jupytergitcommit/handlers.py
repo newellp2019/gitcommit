@@ -33,8 +33,10 @@ class GitCommitHandler(IPythonHandler):
             repo = g.get_repo(repo_name)
 
         cm = ContentsManager()
-        file = cm.get(self.request.headers['Referer'].split("?")[0])
-        print(file)
+        pushed_file = self.request.headers['Referer'].split("?")[0]
+        print(pushed_file)
+        pushed_file = cm.get(pushed_file)
+        print(pushed_file)
 
         # obtain filename and msg for commit
         data = json.loads(self.request.body.decode('utf-8'))
