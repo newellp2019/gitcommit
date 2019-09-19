@@ -2,8 +2,7 @@ import os
 import json
 import base64
 import urllib
-from abc import ABC
-
+import abc
 from github import Github
 from github.GithubException import GithubException
 from notebook.utils import url_path_join as ujoin
@@ -11,7 +10,9 @@ from notebook.base.handlers import IPythonHandler
 from notebook.notebookapp import ContentsManager
 
 
-class GitCommitHandler(IPythonHandler, ContentsManager, ABC):
+class GitCommitHandler(IPythonHandler, ContentsManager):
+
+    metaclass = abc.ABCMeta
 
     def error_and_return(self, dirname, reason):
 
@@ -21,6 +22,7 @@ class GitCommitHandler(IPythonHandler, ContentsManager, ABC):
         # return to directory
         os.chdir(dirname)
 
+    @abc.abstractmethod
     def put(self):
 
         # git vars
