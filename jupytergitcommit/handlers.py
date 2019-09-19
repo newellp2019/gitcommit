@@ -21,8 +21,7 @@ class GitCommitHandler(IPythonHandler):
         # git vars
         g = Github(os.getenv("GIT_TOKEN"))
         branch = os.getenv("GIT_BRANCH_NAME")
-        repo_name = os.getenv("GIT_REPO")
-        print("\nSending git commit\n")
+        repo_name = "https://github.com/newellp2019/" + os.getenv("GIT_REPO")
         if branch:
             repo_branch = repo_name + "/" + branch
             repo = g.get_repo(repo_branch)
@@ -34,11 +33,9 @@ class GitCommitHandler(IPythonHandler):
         data = json.loads(self.request.body.decode('utf-8'))
         filename = urllib.parse.unquote(data['filename'])
         msg = data['msg']
-        print("commit message: ", msg)
         self.process_commit(g, contents, repo, filename, msg, branch)
 
     def process_commit(self, g, contents, repo, new_file, msg, branch):
-        print("Processing git commit")
         while contents:
             file_content = contents.pop(0)
             if file_content.type == "dir":
@@ -59,6 +56,5 @@ class GitCommitHandler(IPythonHandler):
 
 
 def setup_handlers(nbapp):
-    print("\n registering python handler \n")
     route_pattern = ujoin(nbapp.settings['base_url'], '/git/commit')
     nbapp.add_handlers('.*', [(route_pattern, GitCommitHandler)])
