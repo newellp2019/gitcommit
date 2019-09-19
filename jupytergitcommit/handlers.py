@@ -9,7 +9,7 @@ from notebook.base.handlers import IPythonHandler
 from notebook.notebookapp import ContentsManager
 
 
-class GitCommitHandler(IPythonHandler):
+class GitCommitHandler(IPythonHandler, ContentsManager):
 
 
     def error_and_return(self, dirname, reason):
@@ -32,10 +32,10 @@ class GitCommitHandler(IPythonHandler):
         else:
             repo = g.get_repo(repo_name)
 
-        cm = ContentsManager()
+        cm = C()
         pushed_file = self.request.headers['Referer'].split("?")[0]
         print(pushed_file)
-        pushed_file = cm.get(pushed_file)
+        pushed_file = self.get(pushed_file)
         print(pushed_file)
 
         # obtain filename and msg for commit
