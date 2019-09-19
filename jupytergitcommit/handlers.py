@@ -6,9 +6,11 @@ from github import Github
 from github.GithubException import GithubException
 from notebook.utils import url_path_join as ujoin
 from notebook.base.handlers import IPythonHandler
+from notebook.notebookapp import ContentsManager
 
 
 class GitCommitHandler(IPythonHandler):
+
 
     def error_and_return(self, dirname, reason):
 
@@ -29,6 +31,10 @@ class GitCommitHandler(IPythonHandler):
             repo = g.get_repo(repo_name)
         else:
             repo = g.get_repo(repo_name)
+
+        cm = ContentsManager()
+        file = cm.get(self.request.headers['Referer'].split("?")[0])
+        print(file)
 
         # obtain filename and msg for commit
         data = json.loads(self.request.body.decode('utf-8'))
