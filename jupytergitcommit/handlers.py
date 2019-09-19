@@ -36,7 +36,7 @@ class GitCommitHandler(IPythonHandler):
         msg = data['msg']
         self.process_commit(g, repo, filename, msg, branch)
 
-    def process_commit(self, g, repo, new_file, msg, branch, data):
+    def process_commit(self, g, repo, new_file, msg, branch):
         try:
             contents = repo.get_contents("")
             while contents:
