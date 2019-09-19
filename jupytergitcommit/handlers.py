@@ -22,9 +22,11 @@ class GitCommitHandler(IPythonHandler):
         g = Github(os.getenv("GIT_TOKEN"))
         branch = os.getenv("GIT_BRANCH_NAME")
         repo_name = "newellp2019/" + os.getenv("GIT_REPO")
+        print(repo_name, os.getenv("GIT_TOKEN"))
         if branch:
             repo_branch = repo_name + "/" + branch
-            repo = g.get_repo(repo_branch)
+            print(repo_branch)
+            repo = g.get_repo(repo_name)
         else:
             repo = g.get_repo(repo_name)
         contents = repo.get_content("")
