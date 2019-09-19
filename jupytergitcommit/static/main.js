@@ -6,6 +6,8 @@ define(['base/js/namespace','base/js/dialog','jquery'], function(IPython, dialog
         icon : 'fa-github',
         help_index : '',
         handler : function (env) {
+            console.info("git_commit_push instantiated")
+
             var on_success = undefined;
             var on_error = undefined;
 
@@ -21,6 +23,7 @@ define(['base/js/namespace','base/js/dialog','jquery'], function(IPython, dialog
 
             // get the canvas for user feedback
             var container = $('#notebook-container');
+            console.log("container: ", container)
 
             function on_ok(){
                 var re = /^\/notebooks(.*?)$/;
