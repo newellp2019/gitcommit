@@ -2,6 +2,7 @@ import os
 import json
 import urllib
 from github import Github
+from github.GithubException import GithubException
 from notebook.utils import url_path_join as ujoin
 from notebook.base.handlers import IPythonHandler
 
@@ -27,24 +28,28 @@ class GitCommitHandler(IPythonHandler):
             repo = g.get_repo(repo_name)
         else:
             repo = g.get_repo(repo_name)
-        contents = repo.get_contents("")
 
         # obtain filename and msg for commit
         data = json.loads(self.request.body.decode('utf-8'))
         filename = urllib.parse.unquote(data['filename'])
         msg = data['msg']
-        self.process_commit(g, contents, repo, filename, msg, branch)
+        self.process_commit(g, repo, filename, msg, branch)
 
-    def process_commit(self, g, contents, repo, new_file, msg, branch):
-        while contents:
-            file_content = contents.pop(0)
-            if file_content.type == "dir":
-                contents.extend(repo.get_contents(file_content.path))
-            else:
-                if new_file == file_content.path:
-                    self.update_file(g, msg, new_file, branch)
+    def process_commit(self, g, repo, new_file, msg, branch):
+        try:
+            contents = repo.get_contents("")
+            while contents:
+                file_content = contents.pop(0)
+                if file_content.type == "dir":
+                    contents.extend(repo.get_contents(file_content.path))
                 else:
-                    self.create_file(g, msg, new_file, branch)
+                    if new_file == file_content.path:
+                        self.update_file(g, msg, new_file, branch)
+                    else:
+                        self.create_file(g, msg, new_file, branch)
+        except GithubException as ge:
+            print(ge)
+            self.create_file(g, msg, new_file, branch)
 
     @staticmethod
     def update_file(g, msg, new_file, branch):
