@@ -31,6 +31,8 @@ class GitCommitHandler(IPythonHandler):
 
         # obtain filename and msg for commit
         data = json.loads(self.request.body.decode('utf-8'))
+        print(data)
+
         filename = urllib.parse.unquote(data['filename'])
         msg = data['msg']
         self.process_commit(g, repo, filename, msg, branch, data)
