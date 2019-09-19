@@ -32,7 +32,7 @@ class GitCommitHandler(IPythonHandler):
 
         # obtain filename and msg for commit
         data = json.loads(self.request.body.decode('utf-8'))
-        content = json.loads(self.request)
+        content = json.loads(self.request.files)
         print(data, content)
         filename = urllib.parse.unquote(data['filename']).split("/")[1]
         msg = data['msg']
