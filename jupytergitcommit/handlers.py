@@ -1,5 +1,6 @@
 import os
 import json
+import base64
 import urllib
 from github import Github
 from github.GithubException import GithubException
@@ -31,11 +32,9 @@ class GitCommitHandler(IPythonHandler):
 
         # obtain filename and msg for commit
         data = json.loads(self.request.body.decode('utf-8'))
-        print(data)
-
-        filename = urllib.parse.unquote(data['filename'])
+        filename = urllib.parse.unquote(data['filename']).remove("/")
         msg = data['msg']
-        self.process_commit(g, repo, filename, msg, branch, data)
+        self.process_commit(g, repo, filename, msg, branch)
 
     def process_commit(self, g, repo, new_file, msg, branch, data):
         try:
@@ -60,7 +59,7 @@ class GitCommitHandler(IPythonHandler):
     @staticmethod
     def create_file(repo, msg, new_file, branch, data):
         print(msg, new_file, branch)
-        repo.create_file(message=msg, content=data, path=new_file, branch=branch)
+        repo.create_file(message=msg, content=base64.encode(msg), path=new_file, branch=branch)
 
 
 def setup_handlers(nbapp):
