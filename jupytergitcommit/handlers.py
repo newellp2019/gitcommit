@@ -57,7 +57,8 @@ class GitCommitHandler(IPythonHandler):
 
     @staticmethod
     def create_file(repo, msg, new_file, branch):
-        repo.create_file(new_file, msg, msg, branch=branch)
+        print(msg, new_file, branch)
+        repo.create_file(message=msg, content=new_file, branch=branch)
 
 
 def setup_handlers(nbapp):
