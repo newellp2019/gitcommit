@@ -21,7 +21,7 @@ class GitCommitHandler(IPythonHandler):
         # git vars
         g = Github(os.getenv("GIT_TOKEN"))
         branch = os.getenv("GIT_BRANCH_NAME")
-        repo_name = "https://github.com/newellp2019/" + os.getenv("GIT_REPO")
+        repo_name = "newellp2019/" + os.getenv("GIT_REPO")
         if branch:
             repo_branch = repo_name + "/" + branch
             repo = g.get_repo(repo_branch)
