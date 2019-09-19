@@ -50,7 +50,7 @@ class GitCommitHandler(IPythonHandler):
                         self.create_file(g, msg, new_file, branch)
         except GithubException as ge:
             print(ge)
-            self.create_file(repo, msg, new_file, branch, data)
+            self.create_file(repo, msg, new_file, branch)
 
     @staticmethod
     def update_file(repo, msg, new_file, branch):
